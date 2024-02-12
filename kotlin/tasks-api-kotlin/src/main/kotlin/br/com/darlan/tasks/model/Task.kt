@@ -4,8 +4,8 @@ import jakarta.persistence.*
 import java.time.LocalDate
 import java.time.LocalTime
 
-@Table(name = "TB_TASKS")
 @Entity
+@Table(name = "TB_TASKS")
 data class Task(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     var idTask: Long,
@@ -17,5 +17,4 @@ data class Task(
     var endDate: LocalDate,
     var endTime: LocalTime,
     var address: String,
-    var host: Person,
-    var guests: List<Person>)
+    var host: String)
