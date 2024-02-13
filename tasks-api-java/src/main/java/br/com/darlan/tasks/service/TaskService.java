@@ -26,14 +26,15 @@ public class TaskService {
     }
 
     public Task findById(Long idTask) {
-        var task = repository.findById(idTask).orElseThrow(
-                () -> new NotFoundException("There's no task associated to the id $idTask"));
-        return task;
+        return repository.findById(idTask).orElseThrow(
+                () -> new NotFoundException("There's no task associated to the id " + idTask));
     }
 
     public Task update(Long idTask, Task task) {
         Task task_ = repository.findById(idTask).orElseThrow(
-                () -> new NotFoundException("There's no task associated to the id $idTask"));
+                () -> {
+                    return new NotFoundException("There's no task associated to the id " + idTask);
+                });
         task.setIdTask(task_.getIdTask());
         return repository.save(task);
     }

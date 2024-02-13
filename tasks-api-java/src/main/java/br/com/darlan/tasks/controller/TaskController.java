@@ -1,6 +1,7 @@
 package br.com.darlan.tasks.controller;
 
 
+import br.com.darlan.tasks.aspect.annotations.LogExecution;
 import br.com.darlan.tasks.dto.TaskDTO;
 import br.com.darlan.tasks.service.TaskService;
 import br.com.darlan.tasks.util.TaskUtil;
@@ -23,6 +24,7 @@ public class TaskController {
     }
 
     @GetMapping
+    @LogExecution
     public ResponseEntity<List<TaskDTO>> list() {
         List<TaskDTO> dtos = taskUtil.entityListToDTOList(service.list());
         dtos = taskUtil.addSelfLink(dtos);
@@ -30,21 +32,25 @@ public class TaskController {
     }
 
     @GetMapping("/{idTask}")
+    @LogExecution
     public ResponseEntity<TaskDTO> findById(@PathVariable("idTask") Long idTask) {
         return ResponseEntity.ok(taskUtil.entityToDTO(service.findById(idTask)));
     }
 
     @PostMapping
+    @LogExecution
     public ResponseEntity<TaskDTO> save(@RequestBody TaskDTO dto) {
         return ResponseEntity.ok(taskUtil.entityToDTO(service.save(taskUtil.dtoToEntity(dto))));
     }
 
     @PutMapping("/{idTask}")
+    @LogExecution
     public ResponseEntity<TaskDTO> update(@PathVariable("idTask") Long idTask, @RequestBody TaskDTO dto) {
         return ResponseEntity.ok(taskUtil.entityToDTO(service.update(idTask, taskUtil.dtoToEntity(dto))));
     }
 
     @DeleteMapping("/{idTask}")
+    @LogExecution
     public ResponseEntity<String> delete(@PathVariable("idTask") Long idTask) {
         service.delete(idTask);
         return ResponseEntity.ok("Task successfully deleted");
