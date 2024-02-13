@@ -1,8 +1,10 @@
 package br.com.darlan.tasks.controller
 
+import br.com.darlan.tasks.aspect.annotations.LogExecution
 import br.com.darlan.tasks.dto.TaskDTO
 import br.com.darlan.tasks.service.TaskService
 import br.com.darlan.tasks.utils.TaskUtil
+
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -27,6 +29,7 @@ class TaskController {
     }
 
     @GetMapping
+    @LogExecution
     fun list(): ResponseEntity<List<TaskDTO>> {
         var dtos = taskUtil.entityListToDTOList(
             service.list()
@@ -36,6 +39,7 @@ class TaskController {
     }
 
     @PostMapping
+    @LogExecution
     fun save(@RequestBody dto: TaskDTO): ResponseEntity<TaskDTO> {
         return ResponseEntity.ok(taskUtil.entityToDto(
             service.save(taskUtil.dtoToEntity(dto))
@@ -43,6 +47,7 @@ class TaskController {
     }
 
     @GetMapping("/{idTask}")
+    @LogExecution
     fun findById(@PathVariable("idTask") idTask: Long): ResponseEntity<TaskDTO> {
         return ResponseEntity.ok(taskUtil.entityToDto(
             service.findById(idTask)
@@ -50,6 +55,7 @@ class TaskController {
     }
 
     @PutMapping("/{idTask}")
+    @LogExecution
     fun update(@PathVariable("idTask") idTask: Long, @RequestBody dto: TaskDTO): ResponseEntity<TaskDTO> {
         return ResponseEntity.ok(taskUtil.entityToDto(
             service.update(idTask, taskUtil.dtoToEntity(dto))
@@ -57,6 +63,7 @@ class TaskController {
     }
 
     @DeleteMapping("/{idTask}")
+    @LogExecution
     fun delete(@PathVariable("idTask") idTask: Long): ResponseEntity<String> {
         service.delete(idTask)
         return ResponseEntity.ok("Task deleted")
