@@ -43,10 +43,10 @@ public class TaskUtil {
     }
 
     public List<TaskDTO> addSelfLink(List<TaskDTO> tasks) {
-        return tasks.stream().peek(t -> {
-            Long idTask = t.getIdTask();
-            Link selfLink = linkTo(methodOn(TaskController.class).findById(idTask)).withSelfRel();
-            t.add(selfLink);
-        }).toList();
+        return tasks.stream().peek(this::addSelfLink).toList();
+    }
+
+    public TaskDTO addSelfLink(TaskDTO t) {
+        return t.add(linkTo(methodOn(TaskController.class).findById(t.getIdTask())).withSelfRel());
     }
 }

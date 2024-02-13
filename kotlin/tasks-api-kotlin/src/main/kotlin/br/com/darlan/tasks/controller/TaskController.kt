@@ -22,44 +22,36 @@ class TaskController {
     private lateinit var service: TaskService
     private lateinit var taskUtil: TaskUtil
 
-    @Autowired
-    fun TaskController(service: TaskService, taskUtil: TaskUtil) {
-        this.service = service
-        this.taskUtil = taskUtil
-    }
-
     @GetMapping
     @LogExecution
     fun list(): ResponseEntity<List<TaskDTO>> {
-        var dtos = taskUtil.entityListToDTOList(
+        return ResponseEntity.ok(taskUtil.addSelfLink(taskUtil.entityListToDTOList(
             service.list()
-        )
-        dtos = taskUtil.addSelfLink(dtos)
-        return ResponseEntity.ok(dtos)
+        )))
     }
 
     @PostMapping
     @LogExecution
     fun save(@RequestBody dto: TaskDTO): ResponseEntity<TaskDTO> {
-        return ResponseEntity.ok(taskUtil.entityToDto(
+        return ResponseEntity.ok(taskUtil.addSelfLink(taskUtil.entityToDto(
             service.save(taskUtil.dtoToEntity(dto))
-        ))
+        )!!))
     }
 
     @GetMapping("/{idTask}")
     @LogExecution
     fun findById(@PathVariable("idTask") idTask: Long): ResponseEntity<TaskDTO> {
-        return ResponseEntity.ok(taskUtil.entityToDto(
+        return ResponseEntity.ok(taskUtil.addSelfLink(taskUtil.entityToDto(
             service.findById(idTask)
-        ))
+        )))
     }
 
     @PutMapping("/{idTask}")
     @LogExecution
     fun update(@PathVariable("idTask") idTask: Long, @RequestBody dto: TaskDTO): ResponseEntity<TaskDTO> {
-        return ResponseEntity.ok(taskUtil.entityToDto(
+        return ResponseEntity.ok(taskUtil.addSelfLink(taskUtil.entityToDto(
             service.update(idTask, taskUtil.dtoToEntity(dto))
-        ))
+        )))
     }
 
     @DeleteMapping("/{idTask}")
@@ -67,5 +59,13 @@ class TaskController {
     fun delete(@PathVariable("idTask") idTask: Long): ResponseEntity<String> {
         service.delete(idTask)
         return ResponseEntity.ok("Task deleted")
+    }
+
+    companion object {
+        @Autowired
+        fun TaskController(taskController: TaskController, service: TaskService, taskUtil: TaskUtil) {
+            taskController.service = service
+            taskController.taskUtil = taskUtil
+        }
     }
 }

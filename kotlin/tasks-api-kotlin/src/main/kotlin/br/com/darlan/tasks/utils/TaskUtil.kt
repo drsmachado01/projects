@@ -32,8 +32,10 @@ class TaskUtil {
     }
 
     fun addSelfLink(dtos: List<TaskDTO>): List<TaskDTO> {
-        return dtos.stream().peek { d -> run {
-            d.add(linkTo(methodOn(TaskController::class.java).findById(d.idTask)).withSelfRel())
-        } }.toList()
+        return dtos.stream().peek { d -> run { addSelfLink(d) } }.toList()
+    }
+
+    fun addSelfLink(d: TaskDTO): TaskDTO {
+        return d.add(linkTo(methodOn(TaskController::class.java).findById(d.idTask)).withSelfRel())
     }
 }

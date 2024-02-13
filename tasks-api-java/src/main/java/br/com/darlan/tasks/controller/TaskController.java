@@ -34,19 +34,19 @@ public class TaskController {
     @GetMapping("/{idTask}")
     @LogExecution
     public ResponseEntity<TaskDTO> findById(@PathVariable("idTask") Long idTask) {
-        return ResponseEntity.ok(taskUtil.entityToDTO(service.findById(idTask)));
+        return ResponseEntity.ok(taskUtil.addSelfLink(taskUtil.entityToDTO(service.findById(idTask))));
     }
 
     @PostMapping
     @LogExecution
     public ResponseEntity<TaskDTO> save(@RequestBody TaskDTO dto) {
-        return ResponseEntity.ok(taskUtil.entityToDTO(service.save(taskUtil.dtoToEntity(dto))));
+        return ResponseEntity.ok(taskUtil.addSelfLink(taskUtil.entityToDTO(service.save(taskUtil.dtoToEntity(dto)))));
     }
 
     @PutMapping("/{idTask}")
     @LogExecution
     public ResponseEntity<TaskDTO> update(@PathVariable("idTask") Long idTask, @RequestBody TaskDTO dto) {
-        return ResponseEntity.ok(taskUtil.entityToDTO(service.update(idTask, taskUtil.dtoToEntity(dto))));
+        return ResponseEntity.ok(taskUtil.addSelfLink(taskUtil.entityToDTO(service.update(idTask, taskUtil.dtoToEntity(dto)))));
     }
 
     @DeleteMapping("/{idTask}")
