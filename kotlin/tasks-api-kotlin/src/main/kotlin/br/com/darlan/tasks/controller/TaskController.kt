@@ -22,6 +22,12 @@ class TaskController {
     private lateinit var service: TaskService
     private lateinit var taskUtil: TaskUtil
 
+    @Autowired
+    fun TaskController(service: TaskService, taskUtil: TaskUtil) {
+        this.service = service
+        this.taskUtil = taskUtil
+    }
+
     @GetMapping
     @LogExecution
     fun list(): ResponseEntity<List<TaskDTO>> {
@@ -35,7 +41,7 @@ class TaskController {
     fun save(@RequestBody dto: TaskDTO): ResponseEntity<TaskDTO> {
         return ResponseEntity.ok(taskUtil.addSelfLink(taskUtil.entityToDto(
             service.save(taskUtil.dtoToEntity(dto))
-        )!!))
+        )))
     }
 
     @GetMapping("/{idTask}")
@@ -58,14 +64,6 @@ class TaskController {
     @LogExecution
     fun delete(@PathVariable("idTask") idTask: Long): ResponseEntity<String> {
         service.delete(idTask)
-        return ResponseEntity.ok("Task deleted")
-    }
-
-    companion object {
-        @Autowired
-        fun TaskController(taskController: TaskController, service: TaskService, taskUtil: TaskUtil) {
-            taskController.service = service
-            taskController.taskUtil = taskUtil
-        }
+        return ResponseEntity.ok("Task $idTask deleted")
     }
 }

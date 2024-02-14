@@ -28,24 +28,23 @@ class TaskService {
 
     @LogExecution
     fun findById(idTask: Long): Task {
-        return task(idTask)!!
+        return repo.findById(idTask).orElseThrow {
+            NotFoundException("There's no task associated to the id $idTask")
+        }!!
     }
 
     @LogExecution
     fun update(idTask: Long, task: Task): Task {
-        task(idTask)
+        repo.findById(idTask).orElseThrow {
+            NotFoundException("There's no task associated to the id $idTask")
+        }
         task.idTask = idTask
         return repo.save(task)
     }
 
-    @LogExecution
-    private fun task(idTask: Long): Task? = repo.findById(idTask).orElseThrow {
-        NotFoundException("There's no task associated to the id $idTask")
-    }
-
-    @LogExecution
     fun delete(idTask: Long) {
-        var task = task(idTask)
-        repo.deleteById(idTask)
+        repo.delete(repo.findById(idTask).orElseThrow {
+            NotFoundException("There's no task associated to the id $idTask")
+        }!!)
     }
 }
