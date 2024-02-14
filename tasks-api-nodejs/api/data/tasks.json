@@ -1,0 +1,19 @@
+[
+    {
+        "idTask": 1,
+        "taskName": "Wake up",
+        "taskDescription": "Time do wake up",
+        "uniqueExecution": false,
+        "startDate": "2024-02-15",
+        "startTime": "07:00:00",
+        "endDate": "2024-12-31",
+        "endTime": "07:30:00",
+        "address": "My House",
+        "host": "Astolpho",
+        "_links": {
+            "self": {
+                "href": "http://localhost:8080/tasks/1"
+            }
+        }
+    }
+]
