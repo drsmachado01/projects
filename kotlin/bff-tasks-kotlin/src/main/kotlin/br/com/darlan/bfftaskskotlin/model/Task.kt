@@ -13,5 +13,5 @@ class Task {
     var endDate: LocalDate? = null;
     var endTime: LocalTime? = null;
     var address: String? = null;
-    var host: String? = null;
+    var host: Long? = null;
 }

@@ -17,4 +17,4 @@ data class Task(
     var endDate: LocalDate,
     var endTime: LocalTime,
     var address: String,
-    var host: String)
+    var host: Long)

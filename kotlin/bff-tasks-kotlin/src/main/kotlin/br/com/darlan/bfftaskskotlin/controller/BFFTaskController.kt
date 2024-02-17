@@ -1,6 +1,7 @@
 package br.com.darlan.bfftaskskotlin.controller
 
-import br.com.darlan.bfftaskskotlin.model.Task
+import br.com.darlan.bfftaskskotlin.aspect.annotations.LogExecution
+import br.com.darlan.bfftaskskotlin.dto.TaskDTO
 import br.com.darlan.bfftaskskotlin.service.BFFTaskService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
@@ -19,7 +20,8 @@ class BFFTaskController {
     }
 
     @GetMapping
-    fun list(): ResponseEntity<List<Task>> {
+    @LogExecution
+    fun list(): ResponseEntity<List<TaskDTO>> {
         return ResponseEntity.ok(service.list())
     }
 }

@@ -13,4 +13,4 @@ data class TaskDTO (var idTask: Long,
                     var endDate: LocalDate,
                     var endTime: LocalTime,
                     var address: String,
-                    var host: String)
+                    var host: UserDTO?)
