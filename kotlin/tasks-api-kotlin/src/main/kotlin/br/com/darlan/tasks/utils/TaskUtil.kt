@@ -16,7 +16,7 @@ class TaskUtil {
     }
 
     fun dtoToEntity(dto: TaskDTO): Task {
-        return Task(dto.idTask, dto.taskName, dto.taskDescription,
+        return Task(dto.idTask!!, dto.taskName, dto.taskDescription,
             dto.uniqueExecution, dto.startDate, dto.startTime, dto.endDate,
             dto.endTime, dto.address, dto.host)
     }
@@ -35,7 +35,7 @@ class TaskUtil {
         return dtos.stream().peek { d -> run { addSelfLink(d) } }.toList()
     }
 
-    fun addSelfLink(d: TaskDTO): TaskDTO {
-        return d.add(linkTo(methodOn(TaskController::class.java).findById(d.idTask)).withSelfRel())
+    fun addSelfLink(task: TaskDTO): TaskDTO {
+        return task.add(linkTo(methodOn(TaskController::class.java).findById(task.idTask!!)).withSelfRel())
     }
 }

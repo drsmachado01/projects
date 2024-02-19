@@ -4,7 +4,7 @@ import org.springframework.hateoas.RepresentationModel
 import java.time.LocalDate
 import java.time.LocalTime
 
-data class TaskDTO (var idTask: Long,
+data class TaskDTO (var idTask: Long?,
                    var taskName: String,
                    var taskDescription: String,
                    var uniqueExecution: Boolean,

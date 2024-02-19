@@ -9,15 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
-class TaskService {
-    private lateinit var repo: TaskRepository
-    private lateinit var util: TaskUtil
-
-    @Autowired
-    fun TaskService(repo: TaskRepository, util: TaskUtil) {
-        this.repo = repo
-        this.util = util
-    }
+class TaskService(@Autowired val repo: TaskRepository, @Autowired val util: TaskUtil) {
 
     @LogExecution
     fun save(dto: TaskDTO): TaskDTO {
