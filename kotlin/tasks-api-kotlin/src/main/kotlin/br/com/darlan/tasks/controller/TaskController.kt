@@ -17,13 +17,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/tasks")
-class TaskController {
-    private lateinit var service: TaskService
-
-    @Autowired
-    fun TaskController(service: TaskService) {
-        this.service = service
-    }
+class TaskController (@Autowired var service: TaskService){
 
     @GetMapping
     @LogExecution
